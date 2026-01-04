@@ -12,4 +12,8 @@ public interface SmartBinRepository extends JpaRepository<SmartBin, Long> {
     Optional<SmartBin> findByUser(User user);
 
     Optional<SmartBin> findByBinCode(String binCode);
+
+    Optional<SmartBin> findByDeviceId(String deviceId);
+    
+    
 }

@@ -8,39 +8,25 @@ import com.abhi.trashbot.repository.BinStatusRepository;
 @Service
 public class BinEventService {
 
-    private BinStatusRepository binStatusRepository;
-    private CouponService couponService;
+    private final BinStatusRepository binStatusRepository;
+    private final BinStatusService binStatusService;
 
-    public BinEventService(BinStatusRepository binStatusRepository,
-                           CouponService couponService) {
+    public BinEventService(BinStatusRepository binStatusRepository, BinStatusService binStatusService) {
         this.binStatusRepository = binStatusRepository;
-        this.couponService = couponService;
+        this.binStatusService = binStatusService;
     }
 
-    public String handleBinUpdate(Long binId,
-            double prevFill,
-            double newFill) {
+    public String handleBinUpdate(Long binId, double newFill) {
+        BinStatus status = binStatusRepository.findBySmartBin_Id(binId)
+                .orElseThrow(() -> new RuntimeException("Bin status not found"));
 
-		BinStatus status = binStatusRepository.findBySmartBin_Id(binId)
-		.orElseThrow(() -> new RuntimeException("Bin status not found"));
-		
-		// Update recyclable bin fill %
-		status.setRecyclableFill((int) newFill);
-		status.setLastUpdated(java.time.LocalDateTime.now());
-		binStatusRepository.save(status);
-		
-		// 🔥 REWARD LOGIC
-		if (prevFill >= 90 && newFill <= 10) {
-		
-			Long userId = status.getSmartBin().getUser().getId();
-			
-			// Create coupon reward
-			couponService.createCoupon(userId, 5.0);
-			
-			return "Bin emptied → Coupon rewarded";
-		}
-		
-		return "Bin updated (no reward)";
-}
-
+        // Even if we only have 'newFill', we call the central logic
+        // This keeps the reward check consistent
+        return binStatusService.processStatusUpdate(
+            status, 
+            status.getMedicalFill(), 
+            status.getEwasteFill(), 
+            (int) newFill
+        );
+    }
 }

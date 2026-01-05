@@ -3,6 +3,7 @@ package com.abhi.trashbot.controller;
 import org.springframework.web.bind.annotation.*;
 
 import com.abhi.trashbot.dto.BinRegisterRequest;
+import com.abhi.trashbot.dto.BinUpdateRequest;
 import com.abhi.trashbot.model.SmartBin;
 import com.abhi.trashbot.service.SmartBinService;
 
@@ -22,4 +23,10 @@ public class SmartBinController {
     public SmartBin registerBin(@RequestBody BinRegisterRequest request) {
         return smartBinService.registerBin(request);
     }
+    
+    @PostMapping("/update")
+    public String updateBin(@RequestBody BinUpdateRequest request) {
+        return smartBinService.updateBinStatus(request);
+    }
+
 }

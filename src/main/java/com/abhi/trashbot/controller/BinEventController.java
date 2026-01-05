@@ -23,6 +23,6 @@ public class BinEventController {
             @RequestParam double newFill) {
 
         return binEventService.handleBinUpdate(
-                binId, previousFill, newFill);
+                binId, newFill);
     }
 }

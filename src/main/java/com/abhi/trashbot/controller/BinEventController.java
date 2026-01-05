@@ -1,5 +1,7 @@
 package com.abhi.trashbot.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,19 +41,23 @@ public class BinEventController {
     
     
     
+    ////Updates PIECHART COMPOSITION 
     @PostMapping("/update-composition")
     public String updateComposition(
-            @RequestParam Long binId,
-            @RequestParam int plastic,
-            @RequestParam int metal,
-            @RequestParam int glass,
-            @RequestParam int others) {
+            @RequestBody Map<String, Object> payload) { // Use @RequestBody for JSON
+
+        Long binId = Long.valueOf(payload.get("binId").toString());
+        
+        // Parse values as double to handle 1.2, 0.5, etc.
+        double plastic = Double.parseDouble(payload.get("plastic").toString());
+        double metal = Double.parseDouble(payload.get("metal").toString());
+        double glass = Double.parseDouble(payload.get("glass").toString());
+        double others = Double.parseDouble(payload.get("others").toString());
 
         SmartBin smartBin = smartBinRepository.findById(binId)
                 .orElseThrow(() -> new RuntimeException("Bin not found"));
 
-        WasteComposition wc =
-                compositionRepository.findBySmartBin(smartBin)
+        WasteComposition wc = compositionRepository.findBySmartBin(smartBin)
                 .orElse(new WasteComposition());
 
         wc.setSmartBin(smartBin);

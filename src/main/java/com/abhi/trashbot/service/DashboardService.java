@@ -76,15 +76,11 @@ public class DashboardService {
                 compositionRepository.findBySmartBin(bin)
                 .orElse(null);
 
-        Map<String, Integer> composition;
+
+        Map<String, Double> composition; // Changed Integer to Double
 
         if (wc == null) {
-            composition = Map.of(
-                "plastic", 0,
-                "metal", 0,
-                "glass", 0,
-                "others", 0
-            );
+            composition = Map.of("plastic", 0.0, "metal", 0.0, "glass", 0.0, "others", 0.0);
         } else {
             composition = Map.of(
                 "plastic", wc.getPlastic(),
@@ -119,10 +115,10 @@ public class DashboardService {
                         "recyclable", 0
                 ),
                 Map.of(
-                        "plastic", 0,
-                        "metal", 0,
-                        "glass", 0,
-                        "others", 0
+                        "plastic", 0.0,
+                        "metal", 0.0,
+                        "glass", 0.0,
+                        "others", 0.0
                 ),
                 null
         );

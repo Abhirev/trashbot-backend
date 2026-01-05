@@ -20,11 +20,11 @@ public class WasteComposition {
     @JoinColumn(name = "bin_id", nullable = false)
     private SmartBin smartBin;
 
-    private int plastic;
-    private int metal;
-    private int glass;
-    private int others;
-	public int getPlastic() {
+    private double plastic; 
+    private double metal;   
+    private double glass;   
+    private double others;  
+	public double getPlastic() {
 		return plastic;
 	}
 	public SmartBin getSmartBin() {
@@ -33,25 +33,25 @@ public class WasteComposition {
 	public void setSmartBin(SmartBin smartBin) {
 		this.smartBin = smartBin;
 	}
-	public void setPlastic(int plastic) {
+	public void setPlastic(double plastic) {
 		this.plastic = plastic;
 	}
-	public int getMetal() {
+	public double getMetal() {
 		return metal;
 	}
-	public void setMetal(int metal) {
+	public void setMetal(double metal) {
 		this.metal = metal;
 	}
-	public int getGlass() {
+	public double getGlass() {
 		return glass;
 	}
-	public void setGlass(int glass) {
+	public void setGlass(double glass) {
 		this.glass = glass;
 	}
-	public int getOthers() {
+	public double getOthers() {
 		return others;
 	}
-	public void setOthers(int others) {
+	public void setOthers(double others) {
 		this.others = others;
 	}
 

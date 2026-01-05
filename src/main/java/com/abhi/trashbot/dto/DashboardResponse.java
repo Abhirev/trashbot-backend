@@ -11,7 +11,7 @@ public class DashboardResponse {
     private double totalSegregatedKg;
 
     private Map<String, Integer> bins;
-    private Map<String, Integer> composition;
+    private Map<String, Double> composition;
 
     private LocalDateTime lastUpdated;
 
@@ -20,7 +20,7 @@ public class DashboardResponse {
                              int level,
                              double totalSegregatedKg,
                              Map<String, Integer> bins,
-                             Map<String, Integer> composition,
+                             Map<String, Double> composition,
                              LocalDateTime lastUpdated) {
 
         this.ecoScore = ecoScore;
@@ -38,6 +38,6 @@ public class DashboardResponse {
     public int getLevel() { return level; }
     public double getTotalSegregatedKg() { return totalSegregatedKg; }
     public Map<String, Integer> getBins() { return bins; }
-    public Map<String, Integer> getComposition() { return composition; }
+    public Map<String, Double> getComposition() { return composition; }
     public LocalDateTime getLastUpdated() { return lastUpdated; }
 }

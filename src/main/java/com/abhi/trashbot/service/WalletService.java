@@ -63,7 +63,7 @@ public class WalletService {
                 .mapToDouble(WalletTransaction::getAmount)
                 .sum();
 
-        return totalCredits * 10; // Eco score formula
+        return (totalCredits + totalCredits * 0.5); 
     }
     
     public String calculateEcoLevel(double ecoScore) {

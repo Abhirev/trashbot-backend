@@ -16,17 +16,16 @@ public class BinEventService {
         this.binStatusService = binStatusService;
     }
 
-    public String handleBinUpdate(Long binId, double newFill) {
-        BinStatus status = binStatusRepository.findBySmartBin_Id(binId)
+    public String handleHardwareUpdate(Long binId, double mFill, double eFill, double rFill) {
+    	BinStatus status = binStatusRepository.findBySmartBin_Id(binId)
                 .orElseThrow(() -> new RuntimeException("Bin status not found"));
 
-        // Even if we only have 'newFill', we call the central logic
-        // This keeps the reward check consistent
+        // We pass all three fresh values to the centralized status service
         return binStatusService.processStatusUpdate(
             status, 
-            status.getMedicalFill(), 
-            status.getEwasteFill(), 
-            (int) newFill
+            (int) mFill, 
+            (int) eFill, 
+            (int) rFill
         );
     }
 }

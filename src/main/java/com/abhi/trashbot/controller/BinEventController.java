@@ -28,21 +28,23 @@ public class BinEventController {
         this.binEventService = binEventService;
     }
 
-    // 🔧 TEMP TEST ENDPOINT
-    @PostMapping("/simulate-empty")
-    public String simulateBinEmpty(
-            @RequestParam Long binId,
-            @RequestParam double previousFill,
-            @RequestParam double newFill) {
+ // 🚀 PERMANENT RASPBERRY PI ENDPOINT
+    @PostMapping("/update-emptied")
+    public String updateBinLevel(@RequestBody Map<String, Object> payload) {
 
-        return binEventService.handleBinUpdate(
-                binId, newFill);
+    	Long binId = Long.valueOf(payload.get("binId").toString());
+        double mFill = Double.parseDouble(payload.get("medicalFill").toString());
+        double eFill = Double.parseDouble(payload.get("ewasteFill").toString());
+        double rFill = Double.parseDouble(payload.get("recyclableFill").toString());
+
+        // We pass all three to the service now
+        return binEventService.handleHardwareUpdate(binId, mFill, eFill, rFill);
     }
     
     
     
     ////Updates PIECHART COMPOSITION 
-    @PostMapping("/update-composition")
+    @PostMapping("/update-piechart")
     public String updateComposition(
             @RequestBody Map<String, Object> payload) { // Use @RequestBody for JSON
 
